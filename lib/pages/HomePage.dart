@@ -1,5 +1,21 @@
+import 'package:buddiesgram/models/user.dart';
+import 'package:buddiesgram/pages/CreateAccountPage.dart';
+import 'package:buddiesgram/pages/NotificationsPage.dart';
+import 'package:buddiesgram/pages/ProfilePage.dart';
+import 'package:buddiesgram/pages/SearchPage.dart';
+import 'package:buddiesgram/pages/TimeLinePage.dart';
+import 'package:buddiesgram/pages/UploadPage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+
+final GoogleSignIn gSignIn = GoogleSignIn();
+final userReference = Firestore.instance.collection('users');
+
+final DateTime timestamp = DateTime.now();
+User currentUser;
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,9 +24,114 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isSignedIn = false;
+  PageController pageController;
+  int getPageIndex = 0;
 
-  Widget buildHomeScreen(){
-    return Text('already signed in');
+  void initState(){
+    super.initState(); 
+
+    pageController = PageController();
+
+    gSignIn.onCurrentUserChanged.listen((gSigninAccount){
+      controlSignIn(gSigninAccount);
+    },onError: (gError){
+      print('Error Message: '+ gError);
+    });
+
+    gSignIn.signInSilently(suppressErrors: false).then((gSigninAccount) {
+      controlSignIn(gSigninAccount);
+    }).catchError((gError){
+     print('Error Message: '+ gError);
+    });
+  }
+
+  controlSignIn(GoogleSignInAccount signInAccount) async{
+    if(signInAccount != null){
+      await saveUserInfoToFireStore();
+      setState(() {
+        isSignedIn = true;
+      });
+    }else{
+      setState(() {
+        isSignedIn = false;
+      });
+    }
+  }
+
+  saveUserInfoToFireStore() async{
+    final GoogleSignInAccount gCurrentUser = gSignIn.currentUser;
+    DocumentSnapshot documentSnapshot = await userReference.document(gCurrentUser.id).get();
+
+    if(!documentSnapshot.exists){
+      final username = await Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccountPage()));
+    
+      userReference.document(gCurrentUser.id).setData({
+        'id': gCurrentUser.id,
+        'profileName': gCurrentUser.displayName, 
+        'username': username, 
+        'url': gCurrentUser.photoUrl,
+        'email': gCurrentUser.email, 
+        'bio': '',
+        'timestamp': timestamp
+      });
+      documentSnapshot = await userReference.document(gCurrentUser.id).get();
+    }    
+    currentUser = User.fromDocument(documentSnapshot);
+  }
+
+  void dispose(){
+    pageController.dispose();
+    super.dispose();
+  }
+
+  loginUser() {
+    gSignIn.signIn();
+  }
+
+  logoutUser(){
+    gSignIn.signOut();
+  }
+
+  whenPageChanges(int pageIndex){
+    setState(() {
+      this.getPageIndex = pageIndex;
+    });
+  }
+
+  onTapChangePage(int pageIndex){
+    pageController.animateToPage(pageIndex, duration: Duration(milliseconds: 400), curve: Curves.bounceInOut);
+  }
+
+  Scaffold buildHomeScreen(){
+    return Scaffold(
+      body: PageView(
+        children: <Widget>[
+          //TimeLinePage(),
+          RaisedButton.icon(onPressed: logoutUser, icon: Icon(Icons.close), label:Text('Sign Out')),
+          SearchPage(),
+          UploadPage(),
+          NotificationsPage(),
+          ProfilePage(),
+        ],
+        controller: pageController,
+        onPageChanged: whenPageChanges,
+        physics: NeverScrollableScrollPhysics(),
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        currentIndex: getPageIndex,
+        onTap: onTapChangePage,
+        backgroundColor: Theme.of(context).accentColor,
+        activeColor: Colors.white,
+        inactiveColor: Colors.blueGrey,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home)),
+          BottomNavigationBarItem(icon: Icon(Icons.search)),
+          BottomNavigationBarItem(icon: Icon(Icons.add)),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite)),
+          BottomNavigationBarItem(icon: Icon(Icons.person)),
+        ],
+      ),
+    );
   }
 
   Scaffold buildSignInScreen(){
@@ -33,7 +154,7 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontSize: 40.0, color: Colors.white)
             ),
             GestureDetector(
-              onTap: () => 'button tapped',
+              onTap: loginUser,
               child: Container(
                 width: 270.0, 
                 height: 65.0, 
