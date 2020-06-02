@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1015057849732",
+    "firebase_url": "https://nbhfreelancerlicenta.firebaseio.com",
+    "project_id": "nbhfreelancerlicenta",
+    "storage_bucket": "nbhfreelancerlicenta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015057849732:android:a2107ac145d49a713811d1",
+        "android_client_info": {
+          "package_name": "com.Cristian.nbh_freelancer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1015057849732-iqfhaaiknnl53m6p5t7sigst9f2jlnvu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Cristian.nbh_freelancer",
+            "certificate_hash": "50da4cf064276fbe3e8f1bf68f304f1eae2e09a5"
+          }
+        },
+        {
+          "client_id": "1015057849732-489v573ho6j7u6ctm47o23fdvguiupre.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtZOsmRWs5gFPNX6dlXOjvaS-HSNRm7Kg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1015057849732-489v573ho6j7u6ctm47o23fdvguiupre.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
