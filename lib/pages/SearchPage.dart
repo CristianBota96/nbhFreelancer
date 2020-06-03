@@ -84,9 +84,7 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
           UserResult userResult = UserResult(eachUser);
           searchUsersResult.add(userResult);
         });
-        return ListView(
-          children: searchUsersResult
-        );
+        return ListView(children: searchUsersResult);
       },
     );
   }
