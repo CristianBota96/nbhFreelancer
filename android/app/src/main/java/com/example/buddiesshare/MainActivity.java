@@ -1,4 +1,4 @@
-package com.muhammadali.buddiesgram;
+package com.cristian.nbh_freelancer;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

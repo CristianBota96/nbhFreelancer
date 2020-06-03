@@ -1,10 +1,10 @@
-import 'package:buddiesgram/models/user.dart';
-import 'package:buddiesgram/pages/CreateAccountPage.dart';
-import 'package:buddiesgram/pages/NotificationsPage.dart';
-import 'package:buddiesgram/pages/ProfilePage.dart';
-import 'package:buddiesgram/pages/SearchPage.dart';
-import 'package:buddiesgram/pages/TimeLinePage.dart';
-import 'package:buddiesgram/pages/UploadPage.dart';
+import 'package:NBHFreelancer/models/user.dart';
+import 'package:NBHFreelancer/pages/CreateAccountPage.dart';
+import 'package:NBHFreelancer/pages/NotificationsPage.dart';
+import 'package:NBHFreelancer/pages/ProfilePage.dart';
+import 'package:NBHFreelancer/pages/SearchPage.dart';
+import 'package:NBHFreelancer/pages/TimeLinePage.dart';
+import 'package:NBHFreelancer/pages/UploadPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
