@@ -1,4 +1,4 @@
-import 'package:buddiesgram/widgets/HeaderWidget.dart';
+import 'package:NBHFreelancer/widgets/HeaderWidget.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsPage extends StatefulWidget {

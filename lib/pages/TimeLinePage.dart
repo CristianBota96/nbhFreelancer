@@ -1,5 +1,5 @@
-import 'package:buddiesgram/widgets/HeaderWidget.dart';
-import 'package:buddiesgram/widgets/ProgressWidget.dart';
+import 'package:NBHFreelancer/widgets/HeaderWidget.dart';
+import 'package:NBHFreelancer/widgets/ProgressWidget.dart';
 import 'package:flutter/material.dart';
 
 class TimeLinePage extends StatefulWidget {

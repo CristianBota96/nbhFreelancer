@@ -1,9 +1,9 @@
-import 'package:buddiesgram/models/user.dart';
-import 'package:buddiesgram/widgets/ProgressWidget.dart';
+import 'package:NBHFreelancer/models/user.dart';
+import 'package:NBHFreelancer/widgets/ProgressWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:buddiesgram/pages/HomePage.dart';
+import 'package:NBHFreelancer/pages/HomePage.dart';
 
 class SearchPage extends StatefulWidget {
   @override
