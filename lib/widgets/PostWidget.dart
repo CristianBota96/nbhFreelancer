@@ -249,7 +249,8 @@ class _PostState extends State<Post> {
         "type": "like",
         "username": currentUser.username,
         "userId": currentUser.id,
-        "timestamp": DateTime.now(),
+        // "timestamp": DateTime.now(),
+        "timestamp": timestamp,
         "url": url,
         "postId": postId,
         "userProfileImg": currentUser.url,
@@ -262,7 +263,7 @@ class _PostState extends State<Post> {
     if (_liked) {
       postsReference
           .document(ownerId)
-          .collection("userPost")
+          .collection("usersPosts")
           .document(postId)
           .updateData({"likes.$currentOnlineUserId": false});
       removeLike();
@@ -299,13 +300,13 @@ class _PostState extends State<Post> {
         alignment: Alignment.center,
         children: <Widget>[
           Image.network(url),
-          showHeart
-              ? Icon(
-                  Icons.favorite,
-                  size: 140.0,
-                  color: Colors.red,
-                )
-              : Text(""),
+          // showHeart
+          //     ? Icon(
+          //         Icons.favorite,
+          //         size: 140.0,
+          //         color: Colors.red,
+          //       )
+          //     : Text(""),
         ],
       ),
     );
