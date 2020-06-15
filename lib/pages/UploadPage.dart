@@ -56,18 +56,18 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
       context: mContext,
       builder: (context){
         return SimpleDialog(
-          title: Text('New Post', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          title: Text('New Post', style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold)),
           children: <Widget>[
             SimpleDialogOption(
-              child: Text('Capture image with Camera', style: TextStyle(color: Colors.white,),),
+              child: Text('Capture image with Camera', style: TextStyle(color: Colors.blueGrey,),),
               onPressed: captureImageWithCamera,
             ),
             SimpleDialogOption(
-              child: Text('Select image from Gallery', style: TextStyle(color: Colors.white,),),
+              child: Text('Select image from Gallery', style: TextStyle(color: Colors.blueGrey,),),
               onPressed: pickImageFromGallery,
             ),
             SimpleDialogOption(
-              child: Text('Cancel', style: TextStyle(color: Colors.white,),),
+              child: Text('Cancel', style: TextStyle(color: Colors.blueGrey,),),
               onPressed: () => Navigator.pop(context),
             ),
           ],
@@ -82,13 +82,13 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center, 
         children: <Widget>[
-          Icon(Icons.add_photo_alternate, color: Colors.grey, size: 200.0,), 
+          Icon(Icons.add_photo_alternate, color: Colors.blueGrey, size: 200.0,), 
           Padding(
             padding: EdgeInsets.only(top: 20.0),
             child: RaisedButton(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0),),
               child: Text('Upload Image', style: TextStyle(color: Colors.white, fontSize: 20.0),),
-              color: Colors.green,
+              color: Colors.teal,
               onPressed: () => takeImage(context),
             ), 
           ),
@@ -118,7 +118,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
     final tDirectory = await getTemporaryDirectory(); 
     final path = tDirectory.path;
     ImD.Image mImageFile = ImD.decodeImage(file.readAsBytesSync());
-    final compressedImageFile = File('$path/img_$postId.jpg')..writeAsBytesSync(ImD.encodeJpg(mImageFile, quality: 90));
+    final compressedImageFile = File('$path/img_$postId.jpg')..writeAsBytesSync(ImD.encodeJpg(mImageFile, quality: 60));
     setState(() {
       file = compressedImageFile;
     });
@@ -168,13 +168,13 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
   displayUploadFormScreen(){
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black, 
-        leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.white,), onPressed: clearPostInfo),
-        title: Text('New Post', style: TextStyle(fontSize: 24.0, color: Colors.white, fontWeight: FontWeight.bold),),
+        backgroundColor: Colors.white, 
+        leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.blueGrey,), onPressed: clearPostInfo),
+        title: Text('New Post', style: TextStyle(fontSize: 24.0, color: Colors.blueGrey, fontWeight: FontWeight.bold),),
         actions: <Widget>[
           FlatButton(
             onPressed: uploading ? null : () => controlUploadAndSave(),
-            child: Text('Share', style: TextStyle(color: Colors.lightGreenAccent, fontWeight: FontWeight.bold, fontSize: 16.0),)
+            child: Text('Share', style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold, fontSize: 16.0),)
           ),
         ],
       ),
@@ -199,11 +199,11 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
             title: Container(
               width: 250.0, 
               child: TextField(
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.blueGrey),
                 controller: descriptionTextEditingController,
                 decoration: InputDecoration(
                   hintText: 'Description', 
-                  hintStyle: TextStyle(color: Colors.white),
+                  hintStyle: TextStyle(color: Colors.blueGrey),
                   border: InputBorder.none,
                 ),
               ),
@@ -211,15 +211,15 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.person_pin_circle, color: Colors.white, size: 36.0,),
+            leading: Icon(Icons.person_pin_circle, color: Colors.blueGrey, size: 36.0,),
             title: Container(
               width: 250.0, 
               child: TextField(
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.blueGrey),
                 controller: locationTextEditingController,
                 decoration: InputDecoration(
                   hintText: 'Location', 
-                  hintStyle: TextStyle(color: Colors.white),
+                  hintStyle: TextStyle(color: Colors.blueGrey),
                   border: InputBorder.none,
                 ),
               ),
@@ -231,7 +231,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
             alignment: Alignment.center,
             child: RaisedButton.icon(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35.0)),
-              color: Colors.green,
+              color: Colors.teal,
               icon: Icon(Icons.location_on, color: Colors.white),
               label: Text('Get my location', style: TextStyle(color: Colors.white),),
               onPressed: getUserCurrentLocation,

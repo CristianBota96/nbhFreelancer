@@ -12,13 +12,26 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 
-final GoogleSignIn gSignIn = GoogleSignIn();
-final userReference = Firestore.instance.collection('users');
-final StorageReference storageReference = FirebaseStorage.instance.ref().child('Posts Pictures');
-final postsReference = Firestore.instance.collection('posts');
+// final GoogleSignIn gSignIn = GoogleSignIn();
+// final userReference = Firestore.instance.collection('users');
+// final StorageReference storageReference = FirebaseStorage.instance.ref().child('Posts Pictures');
+// final postsReference = Firestore.instance.collection('posts');
+// final DateTime timestamp = DateTime.now();
+// User currentUser;
 
+final GoogleSignIn gSignIn = GoogleSignIn();
+final usersReference = Firestore.instance.collection("user");
+final StorageReference storageReference =
+    FirebaseStorage.instance.ref().child('Post Pictures');
+final postsReference = Firestore.instance.collection("posts");
+final activityFeedReference = Firestore.instance.collection("feed");
+final commentsReference = Firestore.instance.collection("comments");
+final followersReference = Firestore.instance.collection("followers");
+final followingReference = Firestore.instance.collection("following");
+final timelineReference = Firestore.instance.collection("timeline");
 final DateTime timestamp = DateTime.now();
 User currentUser;
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -63,12 +76,12 @@ class _HomePageState extends State<HomePage> {
 
   saveUserInfoToFireStore() async{
     final GoogleSignInAccount gCurrentUser = gSignIn.currentUser;
-    DocumentSnapshot documentSnapshot = await userReference.document(gCurrentUser.id).get();
+    DocumentSnapshot documentSnapshot = await usersReference.document(gCurrentUser.id).get();
 
     if(!documentSnapshot.exists){
       final username = await Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccountPage()));
     
-      userReference.document(gCurrentUser.id).setData({
+      usersReference.document(gCurrentUser.id).setData({
         'id': gCurrentUser.id,
         'profileName': gCurrentUser.displayName, 
         'username': username, 
@@ -77,7 +90,7 @@ class _HomePageState extends State<HomePage> {
         'bio': '',
         'timestamp': timestamp
       });
-      documentSnapshot = await userReference.document(gCurrentUser.id).get();
+      documentSnapshot = await usersReference.document(gCurrentUser.id).get();
     }    
     currentUser = User.fromDocument(documentSnapshot);
   }
@@ -123,7 +136,7 @@ class _HomePageState extends State<HomePage> {
         currentIndex: getPageIndex,
         onTap: onTapChangePage,
         backgroundColor: Theme.of(context).accentColor,
-        activeColor: Colors.white,
+        activeColor: Colors.teal,
         inactiveColor: Colors.blueGrey,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home)),

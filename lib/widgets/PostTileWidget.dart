@@ -1,8 +1,24 @@
+import 'package:NBHFreelancer/pages/PostScreenPage.dart';
+import 'package:NBHFreelancer/widgets/PostWidget.dart';
 import 'package:flutter/material.dart';
 
 class PostTile extends StatelessWidget {
+  final Post post;
+  PostTile(this.post);
+
+  displayFullPost(context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                PostScreenPage(postId: post.postId, userId: post.ownerId)));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Text("Post Tile");
+    return GestureDetector(
+      onTap: () => displayFullPost(context),
+      child: Image.network(post.url),
+    );
   }
 }
