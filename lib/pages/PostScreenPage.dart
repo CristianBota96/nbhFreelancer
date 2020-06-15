@@ -5,16 +5,16 @@ import 'package:NBHFreelancer/widgets/ProgressWidget.dart';
 import 'package:flutter/material.dart';
 
 class PostScreenPage extends StatelessWidget {
-  final String userId;
   final String postId;
-  PostScreenPage({this.userId, this.postId});
+  final String userId;
+  PostScreenPage({this.postId, this.userId});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: postsReference
           .document(userId)
-          .collection("userPost")
+          .collection("usersPosts")
           .document(postId)
           .get(),
       builder: (context, dataSnapshot) {
