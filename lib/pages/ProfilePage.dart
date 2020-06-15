@@ -31,9 +31,40 @@ class _ProfilePageState extends State<ProfilePage> {
 final String currentOnlineUserId = currentUser.id;
   void initState() {
     getAllProfilePosts();
-    // getAllFollowers();
-    // getAllFollowings();
-    // checkIfAlreadyFollowing();
+    getAllFollowers();
+    getAllFollowings();
+    checkIfAlreadyFollowing();
+  }
+
+  getAllFollowings() async {
+    QuerySnapshot querySnapshot = await followingReference
+        .document(widget.userProfileId)
+        .collection("userFollowing")
+        .getDocuments();
+    setState(() {
+      countTotalFollowings = querySnapshot.documents.length;
+    });
+  }
+
+  getAllFollowers() async {
+    QuerySnapshot querySnapshot = await followersReference
+        .document(widget.userProfileId)
+        .collection("userFollowers")
+        .getDocuments();
+    setState(() {
+      countTotalFollowers = querySnapshot.documents.length;
+    });
+  }
+
+  checkIfAlreadyFollowing() async {
+    DocumentSnapshot documentSnapshot = await followersReference
+        .document(widget.userProfileId)
+        .collection("userFollwing")
+        .document(currentOnlineUserId)
+        .get();
+    setState(() {
+      following = documentSnapshot.exists;
+    });
   }
 
  createProfileTopView() {
@@ -141,11 +172,84 @@ final String currentOnlineUserId = currentUser.id;
   }
 
   createButton() {
-    bool ownProfile = currentOnlineUserId == widget.userProfileId;
+        bool ownProfile = currentOnlineUserId == widget.userProfileId;
     if (ownProfile) {
       return createButtonTitleAndFunction(
           title: "Edit Profile", performFunction: editUserProfile);
+    } else if (following) {
+      return createButtonTitleAndFunction(
+          title: "Unfollow", performFunction: controlUnfollowUser);
+    } else if (!following) {
+      return createButtonTitleAndFunction(
+          title: "Follow", performFunction: controlFollowUser);
     }
+  }
+
+  controlUnfollowUser() {
+    setState(() {
+      following = false;
+    });
+    followersReference
+        .document(widget.userProfileId)
+        .collection("userFollowers")
+        .document(currentOnlineUserId)
+        .get()
+        .then((document) {
+      if (document.exists) {
+        document.reference.delete();
+      }
+    });
+
+    followingReference
+        .document(currentOnlineUserId)
+        .collection("userFollowing")
+        .document(widget.userProfileId)
+        .get()
+        .then((document) {
+      if (document.exists) {
+        document.reference.delete();
+      }
+    });
+    activityFeedReference
+        .document(widget.userProfileId)
+        .collection("feedItems")
+        .document(currentOnlineUserId)
+        .get()
+        .then((document) {
+      if (document.exists) {
+        document.reference.delete();
+      }
+    });
+  }
+
+  controlFollowUser() {
+    setState(() {
+      following = true;
+    });
+    followersReference
+        .document(widget.userProfileId)
+        .collection("userFollowers")
+        .document(currentOnlineUserId)
+        .setData({});
+
+    followingReference
+        .document(currentOnlineUserId)
+        .collection("userFollowing")
+        .document(widget.userProfileId)
+        .setData({});
+
+    activityFeedReference
+        .document(widget.userProfileId)
+        .collection("feedItems")
+        .document(currentOnlineUserId)
+        .setData({
+      "type": "follow",
+      "ownerId": widget.userProfileId,
+      "username": currentUser.username,
+      "timestamp": DateTime.now(),
+      "userProfileImg": currentUser.url,
+      "userId": currentOnlineUserId
+    });
   }
 
   createButtonTitleAndFunction({String title, Function performFunction}) {

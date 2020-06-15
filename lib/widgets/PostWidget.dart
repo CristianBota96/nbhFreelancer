@@ -183,7 +183,7 @@ class _PostState extends State<Post> {
   removeUserPost() async {
     postsReference
         .document(ownerId)
-        .collection("userPost")
+        .collection("usersPosts")
         .document(postId)
         .get()
         .then((document) {
