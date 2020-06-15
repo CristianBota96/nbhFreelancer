@@ -48,7 +48,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 key: _formKey,
                 autovalidate: true, 
                 child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.blueGrey),
                   validator: (val){
                     if(val.trim().length<5 || val.isEmpty){
                       return "User name is too short";
@@ -64,7 +64,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       borderSide: BorderSide(color: Colors.grey)
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)
+                      borderSide: BorderSide(color: Colors.grey)
                     ),
                     border: OutlineInputBorder(),
                     labelText: "Username", 
