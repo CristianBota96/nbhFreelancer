@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 AppBar header(context, {bool isAppTitle=false, String strTitle, disappearedBackButton=false}) {
   return AppBar(
     iconTheme: IconThemeData(
-      color: Colors.white,
+      color: Colors.black,
     ),
     automaticallyImplyLeading: disappearedBackButton ? false : true,
     title: Text(
-      isAppTitle ? "NBHFreelances" : strTitle, 
+      isAppTitle ? "NBHFreelancer" : strTitle, 
+      textAlign: TextAlign.start,
       style: TextStyle(
-        color: Colors.white, 
-        fontFamily: isAppTitle ? "Signatra" : "", 
-        fontSize: isAppTitle ? 45.0 : 22.0,
+        color: Colors.blueGrey, 
+        // fontFamily: isAppTitle ? "Signatra" : "", 
+        // fontSize: isAppTitle ? 45.0 : 22.0,
       ),
       overflow: TextOverflow.ellipsis,
     ),

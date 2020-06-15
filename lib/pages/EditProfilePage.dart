@@ -37,7 +37,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       loading = true;
     });
 
-    DocumentSnapshot documentSnapshot = await userReference.document(widget.currentOnlineUserId).get(); 
+    DocumentSnapshot documentSnapshot = await usersReference.document(widget.currentOnlineUserId).get(); 
     user = User.fromDocument(documentSnapshot);
 
     profileNameTextEditingController.text = user.profileName; 
@@ -56,7 +56,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
 
     if(_bioValid && _profileNameValid){
-      userReference.document(widget.currentOnlineUserId).updateData({
+      usersReference.document(widget.currentOnlineUserId).updateData({
         'profile': profileNameTextEditingController.text, 
         'bio': bioTextEditingController.text,
       });
@@ -71,11 +71,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       key: _scaffoldGlobalKey, 
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text('Edit Profile', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.blueGrey),
+        title: Text('Edit Profile', style: TextStyle(color: Colors.blueGrey),),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.done, color: Colors.white, size: 30.0,), onPressed: () => Navigator.pop(context),),
+          IconButton(icon: Icon(Icons.done, color: Colors.blueGrey, size: 30.0,), onPressed: () => Navigator.pop(context),),
         ],
       ),
       body: loading ? circularProgress() : ListView(
@@ -110,7 +110,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   color: Colors.red,
                   onPressed: logoutUser,
                   child: Text(
-                    'Logout', 
+                    'Log out', 
                     style: TextStyle(color: Colors.white, fontSize: 16.0)
                   ),
                 ),
@@ -135,21 +135,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
         Padding(
           padding: EdgeInsets.only(top: 13.0),
           child: Text(
-            'Profile Name', style: TextStyle(color: Colors.grey), 
+            'Profile Name', style: TextStyle(color: Colors.blueGrey), 
           ),
         ),
         TextField(
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.blueGrey),
           controller: profileNameTextEditingController,
           decoration: InputDecoration(
             hintText: 'Profile name', 
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.blueGrey),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: BorderSide(color: Colors.blueGrey),
             ),
-            hintStyle: TextStyle(color: Colors.grey), 
+            hintStyle: TextStyle(color: Colors.blueGrey), 
             errorText: _profileNameValid ? null : 'Profile name is too short',
           ),
         ),
@@ -164,21 +164,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
         Padding(
           padding: EdgeInsets.only(top: 13.0),
           child: Text(
-            'Bio', style: TextStyle(color: Colors.grey), 
+            'Bio', style: TextStyle(color: Colors.blueGrey), 
           ),
         ),
         TextField(
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.blueGrey),
           controller: bioTextEditingController,
           decoration: InputDecoration(
             hintText: 'Write some details...', 
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.blueGrey),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: BorderSide(color: Colors.blueGrey),
             ),
-            hintStyle: TextStyle(color: Colors.grey), 
+            hintStyle: TextStyle(color: Colors.blueGrey), 
             errorText: _bioValid ? null : 'Bio is too long',
           ),
         ),

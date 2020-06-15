@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData
       (
-        scaffoldBackgroundColor: Colors.black,
-        dialogBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.white,
+        dialogBackgroundColor: Colors.white,
         primarySwatch: Colors.grey,
         cardColor: Colors.white70,
-        accentColor: Colors.black,
+        accentColor: Colors.white,
       ),
       home: HomePage(),
     );
