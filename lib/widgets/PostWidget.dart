@@ -249,8 +249,8 @@ class _PostState extends State<Post> {
         "type": "like",
         "username": currentUser.username,
         "userId": currentUser.id,
-        // "timestamp": DateTime.now(),
-        "timestamp": timestamp,
+        "timestamp": DateTime.now(),
+        // "timestamp": timestamp,
         "url": url,
         "postId": postId,
         "userProfileImg": currentUser.url,
@@ -383,8 +383,8 @@ class _PostState extends State<Post> {
   displayComments(BuildContext context,
       {String postId, String ownerId, String url}) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      // return CommentsPage(
-      //     postId: postId, postOwnerId: ownerId, postImageUrl: url);
+      return CommentsPage(
+          postId: postId, postOwnerId: ownerId, postImageUrl: url);
     }));
   }
 }
