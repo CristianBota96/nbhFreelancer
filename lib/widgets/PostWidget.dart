@@ -67,7 +67,6 @@ class Post extends StatefulWidget {
 class _PostState extends State<Post> {
   final String postId;
   final String ownerId;
-  //final String timestamp;
   Map likes;
   final String username;
   final String description;
@@ -81,7 +80,6 @@ class _PostState extends State<Post> {
   _PostState(
       {this.postId,
       this.ownerId,
-      //this.timestamp,
       this.likes,
       this.username,
       this.description,
@@ -250,7 +248,6 @@ class _PostState extends State<Post> {
         "username": currentUser.username,
         "userId": currentUser.id,
         "timestamp": DateTime.now(),
-        // "timestamp": timestamp,
         "url": url,
         "postId": postId,
         "userProfileImg": currentUser.url,
@@ -300,13 +297,6 @@ class _PostState extends State<Post> {
         alignment: Alignment.center,
         children: <Widget>[
           Image.network(url),
-          // showHeart
-          //     ? Icon(
-          //         Icons.favorite,
-          //         size: 140.0,
-          //         color: Colors.red,
-          //       )
-          //     : Text(""),
         ],
       ),
     );

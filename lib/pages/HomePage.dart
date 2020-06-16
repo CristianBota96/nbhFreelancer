@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:NBHFreelancer/models/user.dart';
 import 'package:NBHFreelancer/pages/CreateAccountPage.dart';
 import 'package:NBHFreelancer/pages/NotificationsPage.dart';
@@ -6,6 +8,7 @@ import 'package:NBHFreelancer/pages/SearchPage.dart';
 import 'package:NBHFreelancer/pages/TimeLinePage.dart';
 import 'package:NBHFreelancer/pages/UploadPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +45,9 @@ class _HomePageState extends State<HomePage> {
   bool isSignedIn = false;
   PageController pageController;
   int getPageIndex = 0;
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   void initState(){
     super.initState(); 
@@ -67,11 +73,48 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         isSignedIn = true;
       });
+
+      configureRealtimePushNotifications();
     }else{
       setState(() {
         isSignedIn = false;
       });
     }
+  }
+
+ configureRealtimePushNotifications() {
+    final GoogleSignInAccount gUser = gSignIn.currentUser;
+    if (Platform.isIOS) {
+      getIOSPermissions();
+    }
+    _firebaseMessaging.getToken().then((token) {
+      usersReference
+          .document(gUser.id)
+          .updateData({"androidNotificationToken": token});
+    });
+    _firebaseMessaging.configure(onMessage: (Map<String, dynamic> msg) async {
+      final String recipientId = msg["data"]["recipient"];
+      final String body = msg["notification"]["body"];
+      if (recipientId == gUser.id) {
+        SnackBar snackBar = SnackBar(
+          backgroundColor: Colors.white,
+          content: Text(
+            body,
+            style: TextStyle(color: Colors.blueGrey),
+            overflow: TextOverflow.ellipsis,
+          ),
+        );
+        _scaffoldKey.currentState.showSnackBar(snackBar);
+      }
+    });
+  }
+
+  getIOSPermissions() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(alert: true, badge: true, sound: true));
+    _firebaseMessaging.onIosSettingsRegistered.listen((settings) {
+      print("Settings Registered : $settings");
+    });
   }
 
   saveUserInfoToFireStore() async{
@@ -120,9 +163,10 @@ class _HomePageState extends State<HomePage> {
 
   Scaffold buildHomeScreen(){
     return Scaffold(
+      key: _scaffoldKey,
       body: PageView(
         children: <Widget>[
-          TimeLinePage(),
+          TimeLinePage(gCurrentUser: currentUser,),
           SearchPage(),
           UploadPage(gCurrentUser: currentUser,),
           NotificationsPage(),
