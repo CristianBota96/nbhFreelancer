@@ -7,16 +7,18 @@ AppBar header(context, {bool isAppTitle=false, String strTitle, disappearedBackB
     ),
     automaticallyImplyLeading: disappearedBackButton ? false : true,
     title: Text(
-      isAppTitle ? "NBHFreelancer" : strTitle, 
+      isAppTitle ? "Helppo" : strTitle, 
       textAlign: TextAlign.start,
       style: TextStyle(
-        color: Colors.blueGrey, 
+        color: Colors.black, 
         // fontFamily: isAppTitle ? "Signatra" : "", 
         // fontSize: isAppTitle ? 45.0 : 22.0,
       ),
       overflow: TextOverflow.ellipsis,
     ),
-    centerTitle: true,
-    backgroundColor: Theme.of(context).accentColor,
+    // centerTitle: false,
+    // backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
   );
 }

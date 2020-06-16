@@ -20,7 +20,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     if(form.validate()){
       form.save();
 
-      SnackBar snackBar = SnackBar(content: Text('Welcome' + username));
+      SnackBar snackBar = SnackBar(content: Text('Bine ai venit ' + username));
       _scaffoldKey.currentState.showSnackBar(snackBar);
       Timer(Duration(seconds: 4), (){
         Navigator.pop(context, username);
@@ -32,14 +32,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   Widget build(BuildContext parentContext) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: header(context, strTitle: 'Settings', disappearedBackButton: true),
+      appBar: header(context, strTitle: 'Setari', disappearedBackButton: true),
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: 26.0),
-            child: Center(
-              child: Text('Set a username', style: TextStyle(fontSize: 26.0)),
-            ),
+            padding: EdgeInsets.only(top: 26.0, left: 16.0),
+            // child: Center(
+              child: Text('Creaza un nume de utilizator', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+            // ),
           ),
           Padding(
             padding: EdgeInsets.all(17.0),
@@ -51,9 +51,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   style: TextStyle(color: Colors.blueGrey),
                   validator: (val){
                     if(val.trim().length<5 || val.isEmpty){
-                      return "User name is too short";
+                      return "Numele utilizatorului este prea scurt";
                     }else if(val.trim().length>15){
-                      return "User name is too long";
+                      return "Numele utilizatorului este prea lung";
                     }else{
                       return null;
                     }
@@ -67,33 +67,36 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       borderSide: BorderSide(color: Colors.grey)
                     ),
                     border: OutlineInputBorder(),
-                    labelText: "Username", 
+                    labelText: "Numele utilizatorului", 
                     labelStyle: TextStyle(fontSize: 16.0),
-                    hintText: 'atleast 5 characters', 
+                    hintText: 'Cel putin 5 caractere', 
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
               ),
             ),
           ),
-          GestureDetector(
-            onTap: submitUsername,
-            child: Container(
-              height: 55.0, 
-              width: 360.0, 
-              decoration: BoxDecoration(
-                color: Colors.green, 
-                borderRadius: BorderRadius.circular(8.0)
-              ),
-              child: Center(
-                child: Text(
-                  'Proceed',
-                  style: TextStyle(
-                    color: Colors.white, 
-                    fontSize: 16.0, 
-                    fontWeight: FontWeight.bold
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal:16.0),
+                      child: GestureDetector(
+              onTap: submitUsername,
+              child: Container(
+                height: 55.0, 
+                width: 360.0, 
+                decoration: BoxDecoration(
+                  color: Colors.teal, 
+                  borderRadius: BorderRadius.circular(8.0)
+                ),
+                child: Center(
+                  child: Text(
+                    'Continua',
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontSize: 16.0, 
+                      fontWeight: FontWeight.bold
+                    )
                   )
-                )
+                ),
               ),
             ),
           ),

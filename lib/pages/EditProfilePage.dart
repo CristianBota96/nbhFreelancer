@@ -52,7 +52,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     setState(() {
       profileNameTextEditingController.text.trim().length < 3 || profileNameTextEditingController.text.isEmpty ? _profileNameValid = false : _profileNameValid = true;
 
-      bioTextEditingController.text.trim().length > 110 ? _bioValid = false : _bioValid = true;
+      bioTextEditingController.text.trim().length > 250 ? _bioValid = false : _bioValid = true;
     });
 
     if(_bioValid && _profileNameValid){
@@ -61,7 +61,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         'bio': bioTextEditingController.text,
       });
 
-      SnackBar succesSnackBar = SnackBar(content: Text('Profile has been updated successfully'));
+      SnackBar succesSnackBar = SnackBar(content: Text('Profilul a fost actualizat cu succes'));
       _scaffoldGlobalKey.currentState.showSnackBar(succesSnackBar);
     }
   }
@@ -72,11 +72,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
       key: _scaffoldGlobalKey, 
       appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.blueGrey),
-        title: Text('Edit Profile', style: TextStyle(color: Colors.blueGrey),),
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text('Editeaza profilul', style: TextStyle(color: Colors.black),),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.done, color: Colors.blueGrey, size: 30.0,), onPressed: () => Navigator.pop(context),),
+          IconButton(icon: Icon(Icons.done, color: Colors.black, size: 30.0,), onPressed: () => Navigator.pop(context),),
         ],
+        elevation: 0.0,
       ),
       body: loading ? circularProgress() : ListView(
         children: <Widget>[
@@ -95,24 +96,57 @@ class _EditProfilePageState extends State<EditProfilePage> {
               child: Column(children: <Widget>[createProfileNameTextFormField(), createBioTextFormField(),],),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 29.0, left: 50.0, right: 50.0),
+              padding: EdgeInsets.only(top: 29.0,left: 16.0, right: 16.0),
               child: RaisedButton(
                 onPressed: updateUserData,
-                child: Text(
-                  'Update', 
-                  style: TextStyle(color: Colors.black, fontSize: 16.0)
+                // child: Text(
+                //   '   Actualizeaza   ', 
+                //   style: TextStyle(color: Colors.black, fontSize: 16.0)
+                // ),
+                color: Colors.teal,
+                child: Container(
+                height: 55.0, 
+                width: 360.0, 
+                decoration: BoxDecoration(
+                  color: Colors.teal, 
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
+                child: Center(
+                  child: Text(
+                    'Actualizeaza',
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontSize: 16.0, 
+                      fontWeight: FontWeight.bold
+                    )
+                  )
+                ),
+              ),
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 10.0, left: 50.0, right: 50.0),
+                padding: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
                 child: RaisedButton(
-                  color: Colors.red,
-                  onPressed: logoutUser,
-                  child: Text(
-                    'Log out', 
-                    style: TextStyle(color: Colors.white, fontSize: 16.0)
+                color: Colors.red,
+                onPressed: logoutUser,
+                child: Container(
+                  height: 55.0, 
+                  width: 360.0, 
+                  decoration: BoxDecoration(
+                    color: Colors.red, 
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
+                child: Center(
+                  child: Text(
+                    'Deconecteaza-te',
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontSize: 16.0, 
+                      fontWeight: FontWeight.bold
+                    )
+                  )
+                ),
+              ),
                 ),
               ),
              ],
@@ -135,22 +169,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
         Padding(
           padding: EdgeInsets.only(top: 13.0),
           child: Text(
-            'Profile Name', style: TextStyle(color: Colors.blueGrey), 
+            'Numele Profilului', style: TextStyle(color: Colors.blueGrey), 
           ),
         ),
         TextField(
-          style: TextStyle(color: Colors.blueGrey),
+          style: TextStyle(color: Colors.black),
           controller: profileNameTextEditingController,
           decoration: InputDecoration(
-            hintText: 'Profile name', 
+            hintText: 'Numele Profilului', 
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.blueGrey),
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.blueGrey),
             ),
-            hintStyle: TextStyle(color: Colors.blueGrey), 
-            errorText: _profileNameValid ? null : 'Profile name is too short',
+            hintStyle: TextStyle(color: Colors.red), 
+            errorText: _profileNameValid ? null : 'Numele profilului e prea scurt',
           ),
         ),
       ],
@@ -168,18 +202,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ),
         TextField(
-          style: TextStyle(color: Colors.blueGrey),
+          style: TextStyle(color: Colors.black),
           controller: bioTextEditingController,
           decoration: InputDecoration(
-            hintText: 'Write some details...', 
+            hintText: 'Adauga detalii despre tine...', 
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.blueGrey),
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.blueGrey),
             ),
-            hintStyle: TextStyle(color: Colors.blueGrey), 
-            errorText: _bioValid ? null : 'Bio is too long',
+            hintStyle: TextStyle(color: Colors.red), 
+            errorText: _bioValid ? null : 'Bio este prea lung',
           ),
         ),
       ],

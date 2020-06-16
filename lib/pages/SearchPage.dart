@@ -33,10 +33,10 @@ class _SearchPageState extends State<SearchPage>
     return AppBar(
       backgroundColor: Colors.white,
       title: TextFormField(
-        style: TextStyle(fontSize: 18.0, color: Colors.blueGrey),
+        style: TextStyle(fontSize: 18.0, color: Colors.black),
         controller: searchTextEditingController,
         decoration: InputDecoration(
-          hintText: "Search here...",
+          hintText: "Cauta aici...",
           hintStyle: TextStyle(color: Colors.blueGrey),
           enabledBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
@@ -45,19 +45,20 @@ class _SearchPageState extends State<SearchPage>
           filled: true,
           prefixIcon: Icon(
             Icons.search,
-            color: Colors.blueGrey,
+            color: Colors.black,
             size: 30.0,
           ),
           suffixIcon: IconButton(
             icon: Icon(
               Icons.clear,
-              color: Colors.blueGrey,
+              color: Colors.black,
             ),
             onPressed: emptyTheTextFormField,
           ),
         ),
         onFieldSubmitted: controlSearching,
       ),
+      elevation: 0.0,
     );
   }
 
@@ -70,14 +71,14 @@ class _SearchPageState extends State<SearchPage>
           children: <Widget>[
             Icon(
               Icons.face,
-              color: Colors.blueGrey,
+              color: Colors.blueGrey[400],
               size: 100,
             ),
             Text(
-              "Search User",
+              "Cauta un utilizator",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.blueGrey,
+                  color: Colors.blueGrey[400],
                   fontSize: 35.0,
                   fontWeight: FontWeight.w500),
             )
@@ -128,7 +129,7 @@ class UserResult extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(4.0),
       child: Container(
-        color: Colors.blueGrey,
+        color: Colors.white,
         child: Column(
           children: <Widget>[
             GestureDetector(
@@ -136,13 +137,13 @@ class UserResult extends StatelessWidget {
                   displayUserProfile(context, userProfileId: eachUser.id),
               child: ListTile(
                 leading: CircleAvatar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.grey[100],
                   backgroundImage: CachedNetworkImageProvider(eachUser.url),
                 ),
                 title: Text(
                   eachUser.profileName,
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold),
                 ),

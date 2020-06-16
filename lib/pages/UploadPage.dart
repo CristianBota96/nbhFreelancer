@@ -56,18 +56,18 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
       context: mContext,
       builder: (context){
         return SimpleDialog(
-          title: Text('New Post', style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold)),
+          title: Text('Postare noua', style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold)),
           children: <Widget>[
             SimpleDialogOption(
-              child: Text('Capture image with Camera', style: TextStyle(color: Colors.blueGrey,),),
+              child: Text('Adauga o imagine utilizand Camera', style: TextStyle(color: Colors.blueGrey,),),
               onPressed: captureImageWithCamera,
             ),
             SimpleDialogOption(
-              child: Text('Select image from Gallery', style: TextStyle(color: Colors.blueGrey,),),
+              child: Text('Selecteaza o imagine din Galerie', style: TextStyle(color: Colors.blueGrey,),),
               onPressed: pickImageFromGallery,
             ),
             SimpleDialogOption(
-              child: Text('Cancel', style: TextStyle(color: Colors.blueGrey,),),
+              child: Text('Renunta', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
               onPressed: () => Navigator.pop(context),
             ),
           ],
@@ -87,7 +87,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
             padding: EdgeInsets.only(top: 20.0),
             child: RaisedButton(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0),),
-              child: Text('Upload Image', style: TextStyle(color: Colors.white, fontSize: 20.0),),
+              child: Text('Adauga un anunt', style: TextStyle(color: Colors.white, fontSize: 20.0),),
               color: Colors.teal,
               onPressed: () => takeImage(context),
             ), 
@@ -168,13 +168,15 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
   displayUploadFormScreen(){
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white, 
-        leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.blueGrey,), onPressed: clearPostInfo),
-        title: Text('New Post', style: TextStyle(fontSize: 24.0, color: Colors.blueGrey, fontWeight: FontWeight.bold),),
+
+        backgroundColor: Colors.transparent, 
+        elevation: 0.0,
+        leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.black,), onPressed: clearPostInfo),
+        title: Text('Anunt nou', style: TextStyle( color: Colors.black),),
         actions: <Widget>[
           FlatButton(
             onPressed: uploading ? null : () => controlUploadAndSave(),
-            child: Text('Share', style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold, fontSize: 16.0),)
+            child: Text('Distribuie', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0),)
           ),
         ],
       ),
@@ -183,12 +185,12 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
           uploading ? linearProgress() : Text(''),
           Container(
             height: 230.0,
-            width: MediaQuery.of(context).size.width * 0.8,
+            width: MediaQuery.of(context).size.width * 1.0,
             child: Center(
               child: AspectRatio(
-                aspectRatio: 16/9,
+                aspectRatio: 4/3,
                 child: Container(
-                  decoration: BoxDecoration(image: DecorationImage(image: FileImage(file), fit: BoxFit.cover,)),
+                  decoration: BoxDecoration(image: DecorationImage(image: FileImage(file), fit: BoxFit.contain,)),
                 ),
               ),
             ),
@@ -199,10 +201,10 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
             title: Container(
               width: 250.0, 
               child: TextField(
-                style: TextStyle(color: Colors.blueGrey),
+                style: TextStyle(color: Colors.black),
                 controller: descriptionTextEditingController,
                 decoration: InputDecoration(
-                  hintText: 'Description', 
+                  hintText: 'Descriere', 
                   hintStyle: TextStyle(color: Colors.blueGrey),
                   border: InputBorder.none,
                 ),
@@ -215,10 +217,10 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
             title: Container(
               width: 250.0, 
               child: TextField(
-                style: TextStyle(color: Colors.blueGrey),
+                style: TextStyle(color: Colors.black),
                 controller: locationTextEditingController,
                 decoration: InputDecoration(
-                  hintText: 'Location', 
+                  hintText: 'Locatie', 
                   hintStyle: TextStyle(color: Colors.blueGrey),
                   border: InputBorder.none,
                 ),
@@ -226,15 +228,31 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
             ),
           ),
           Container(
-            width: 220.0,
-            height: 110.0,
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
             alignment: Alignment.center,
-            child: RaisedButton.icon(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35.0)),
-              color: Colors.teal,
-              icon: Icon(Icons.location_on, color: Colors.white),
-              label: Text('Get my location', style: TextStyle(color: Colors.white),),
+            child: RaisedButton(
+              // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35.0)),
+              // color: Colors.teal,
               onPressed: getUserCurrentLocation,
+              color: Colors.teal,
+                child: Container(
+                height: 55.0, 
+                width: 360.0, 
+                decoration: BoxDecoration(
+                  color: Colors.teal, 
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Center(
+                  child: Text(
+                    'Locatia mea',
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontSize: 16.0, 
+                      fontWeight: FontWeight.bold
+                    )
+                  )
+                ),
+              ),
             ),
           ),
         ],

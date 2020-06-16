@@ -1,6 +1,7 @@
 
 import 'package:NBHFreelancer/models/user.dart';
 import 'package:NBHFreelancer/pages/HomePage.dart';
+import 'package:NBHFreelancer/pages/UploadPage.dart';
 import 'package:NBHFreelancer/widgets/HeaderWidget.dart';
 import 'package:NBHFreelancer/widgets/PostTileWidget.dart';
 import 'package:NBHFreelancer/widgets/PostWidget.dart';
@@ -89,19 +90,10 @@ final String currentOnlineUserId = currentUser.id;
                     Expanded(
                       flex: 1,
                       child: Column(children: <Widget>[
-                        Row(
+                        Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            createColumns("posts", countPost),
-                            createColumns("followers", countTotalFollowers),
-                            createColumns("following", countTotalFollowings),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            createButton(),
                           ],
                         ),
                       ]),
@@ -112,32 +104,58 @@ final String currentOnlineUserId = currentUser.id;
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 13.0),
                   child: Text(
-                    user.username,
+                    'Salut,' + user.username,
                     style: TextStyle(
-                      color: Colors.blueGrey,
-                      fontSize: 13.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24.0,
                     ),
                   ),
                 ),
+
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(top: 5.0),
+                  padding: EdgeInsets.only(top: 13.0),
                   child: Text(
-                    user.profileName,
+                    'Descriere',
                     style: TextStyle(
                       color: Colors.blueGrey,
-                      fontSize: 17.0,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(top: 3.0),
+                  padding: EdgeInsets.only(top: 3.0, bottom: 13.0),
                   child: Text(
                     user.bio,
                     style: TextStyle(
-                      color: Colors.blueGrey,
+                      color: Colors.black,
                       fontSize: 14.0,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: RaisedButton(
+                      onPressed: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => UploadPage())),
+                      color: Colors.yellow[200],
+                      child: Container(
+                      height: 55.0, 
+                      width: 360.0, 
+                      child: Center(
+                        child: Text(
+                          'Adauga un anunt',
+                          style: TextStyle(
+                            color: Colors.black, 
+                            fontSize: 16.0, 
+                            fontWeight: FontWeight.bold
+                          )
+                        ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -175,13 +193,13 @@ final String currentOnlineUserId = currentUser.id;
         bool ownProfile = currentOnlineUserId == widget.userProfileId;
     if (ownProfile) {
       return createButtonTitleAndFunction(
-          title: "Edit Profile", performFunction: editUserProfile);
+          title: "Editeaza", performFunction: editUserProfile);
     } else if (following) {
       return createButtonTitleAndFunction(
-          title: "Unfollow", performFunction: controlUnfollowUser);
+          title: "Nu mai urmarii", performFunction: controlUnfollowUser);
     } else if (!following) {
       return createButtonTitleAndFunction(
-          title: "Follow", performFunction: controlFollowUser);
+          title: "Urmareste", performFunction: controlFollowUser);
     }
   }
 
@@ -258,20 +276,18 @@ final String currentOnlineUserId = currentUser.id;
       child: FlatButton(
         onPressed: performFunction,
         child: Container(
-          width: 200.0,
+          width: 150.0,
           height: 26.0,
           child: Text(
             title,
             style: TextStyle(
-                color: following ? Colors.blueGrey : Colors.blueGrey,
+                color: following ? Colors.black : Colors.black,
                 fontWeight: FontWeight.bold),
           ),
-          alignment: Alignment.center,
+          alignment: Alignment.centerRight,
           decoration: BoxDecoration(
               color: following ? Colors.transparent : Colors.transparent,
-              border:
-                  Border.all(color: following ? Colors.blueGrey : Colors.blueGrey),
-              borderRadius: BorderRadius.circular(6.0)),
+              ),
         ),
       ),
     );
@@ -289,7 +305,14 @@ final String currentOnlineUserId = currentUser.id;
    @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, strTitle: "Profile"),
+      appBar: AppBar( 
+         title: Text('Profil', style: TextStyle( color: Colors.black),),
+         backgroundColor: Colors.transparent,
+         elevation: 0.0,
+         actions: <Widget>[
+          createButton(),
+        ],
+      ),
       body: ListView(
         children: <Widget>[
           createProfileTopView(),
@@ -362,33 +385,14 @@ final String currentOnlineUserId = currentUser.id;
     }); 
 
     QuerySnapshot querySnapshot = await postsReference.document(widget.userProfileId).collection('usersPosts').orderBy('timestamp', descending: true).getDocuments();
-    // DocumentSnapshot documentSnapshot = await userReference.document(widget.userProfileId).get();
     
     setState(() {
       loading = false;
       countPost = querySnapshot.documents.length;
-      // postList = querySnapshot.documents.map((documentSnapshot) => Post.fromDocument(documentSnapshot)).toList();
       postsList = querySnapshot.documents.map((documentSnapshot) => Post.fromDocument(documentSnapshot)).toList();
     });
   }
 
-  // getAllProfilePosts() async {
-  //     setState(() {
-  //       loading = true;
-  //     });
-  //     QuerySnapshot querySnapshot = await postsReference
-  //         .document(widget.userProfileId)
-  //         .collection("userPost")
-  //         .orderBy("timestamp", descending: true)
-  //         .getDocuments();
-  //     setState(() {
-  //       loading = false;
-  //       countPost = querySnapshot.documents.length;
-  //       postsList = querySnapshot.documents
-  //           .map((documentSnapshot) => Post.fromDocument(documentSnapshot))
-  //           .toList();
-  //     });
-  //   }
    createListAndGridPostOrientation() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

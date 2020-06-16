@@ -14,18 +14,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-
-// final GoogleSignIn gSignIn = GoogleSignIn();
-// final userReference = Firestore.instance.collection('users');
-// final StorageReference storageReference = FirebaseStorage.instance.ref().child('Posts Pictures');
-// final postsReference = Firestore.instance.collection('posts');
-// final DateTime timestamp = DateTime.now();
-// User currentUser;
-
 final GoogleSignIn gSignIn = GoogleSignIn();
 final usersReference = Firestore.instance.collection("users");
-final StorageReference storageReference =
-    FirebaseStorage.instance.ref().child('Post Pictures');
+final StorageReference storageReference = FirebaseStorage.instance.ref().child('Post Pictures');
 final postsReference = Firestore.instance.collection("posts");
 final activityFeedReference = Firestore.instance.collection("feed");
 final commentsReference = Firestore.instance.collection("comments");
@@ -206,10 +197,16 @@ class _HomePageState extends State<HomePage> {
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'NBH-Freelancer', 
+              'Welcome to', 
+              textAlign: TextAlign.start,
+              style: TextStyle(fontSize: 20.0, color: Colors.white)
+            ),
+            Text(
+              'Helppo', 
+              textAlign: TextAlign.start,
               style: TextStyle(fontSize: 40.0, color: Colors.white)
             ),
             GestureDetector(
