@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:NBHFreelancer/models/user.dart';
 import 'package:NBHFreelancer/pages/CreateAccountPage.dart';
 import 'package:NBHFreelancer/pages/NotificationsPage.dart';
@@ -6,23 +8,15 @@ import 'package:NBHFreelancer/pages/SearchPage.dart';
 import 'package:NBHFreelancer/pages/TimeLinePage.dart';
 import 'package:NBHFreelancer/pages/UploadPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-
-// final GoogleSignIn gSignIn = GoogleSignIn();
-// final userReference = Firestore.instance.collection('users');
-// final StorageReference storageReference = FirebaseStorage.instance.ref().child('Posts Pictures');
-// final postsReference = Firestore.instance.collection('posts');
-// final DateTime timestamp = DateTime.now();
-// User currentUser;
-
 final GoogleSignIn gSignIn = GoogleSignIn();
 final usersReference = Firestore.instance.collection("users");
-final StorageReference storageReference =
-    FirebaseStorage.instance.ref().child('Post Pictures');
+final StorageReference storageReference = FirebaseStorage.instance.ref().child('Post Pictures');
 final postsReference = Firestore.instance.collection("posts");
 final activityFeedReference = Firestore.instance.collection("feed");
 final commentsReference = Firestore.instance.collection("comments");
@@ -42,6 +36,9 @@ class _HomePageState extends State<HomePage> {
   bool isSignedIn = false;
   PageController pageController;
   int getPageIndex = 0;
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   void initState(){
     super.initState(); 
@@ -67,11 +64,48 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         isSignedIn = true;
       });
+
+      configureRealtimePushNotifications();
     }else{
       setState(() {
         isSignedIn = false;
       });
     }
+  }
+
+ configureRealtimePushNotifications() {
+    final GoogleSignInAccount gUser = gSignIn.currentUser;
+    if (Platform.isIOS) {
+      getIOSPermissions();
+    }
+    _firebaseMessaging.getToken().then((token) {
+      usersReference
+          .document(gUser.id)
+          .updateData({"androidNotificationToken": token});
+    });
+    _firebaseMessaging.configure(onMessage: (Map<String, dynamic> msg) async {
+      final String recipientId = msg["data"]["recipient"];
+      final String body = msg["notification"]["body"];
+      if (recipientId == gUser.id) {
+        SnackBar snackBar = SnackBar(
+          backgroundColor: Colors.white,
+          content: Text(
+            body,
+            style: TextStyle(color: Colors.blueGrey),
+            overflow: TextOverflow.ellipsis,
+          ),
+        );
+        _scaffoldKey.currentState.showSnackBar(snackBar);
+      }
+    });
+  }
+
+  getIOSPermissions() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(alert: true, badge: true, sound: true));
+    _firebaseMessaging.onIosSettingsRegistered.listen((settings) {
+      print("Settings Registered : $settings");
+    });
   }
 
   saveUserInfoToFireStore() async{
@@ -115,14 +149,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   onTapChangePage(int pageIndex){
-    pageController.animateToPage(pageIndex, duration: Duration(milliseconds: 400), curve: Curves.bounceInOut);
+    pageController.animateToPage(pageIndex, duration: Duration(milliseconds: 100), curve: Curves.linearToEaseOut);
   }
 
   Scaffold buildHomeScreen(){
     return Scaffold(
+      key: _scaffoldKey,
       body: PageView(
         children: <Widget>[
-          TimeLinePage(),
+          TimeLinePage(gCurrentUser: currentUser,),
           SearchPage(),
           UploadPage(gCurrentUser: currentUser,),
           NotificationsPage(),
@@ -142,7 +177,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home)),
           BottomNavigationBarItem(icon: Icon(Icons.search)),
           BottomNavigationBarItem(icon: Icon(Icons.add)),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite)),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications)),
           BottomNavigationBarItem(icon: Icon(Icons.person)),
         ],
       ),
@@ -162,10 +197,16 @@ class _HomePageState extends State<HomePage> {
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'NBH-Freelancer', 
+              'Welcome to', 
+              textAlign: TextAlign.start,
+              style: TextStyle(fontSize: 20.0, color: Colors.white)
+            ),
+            Text(
+              'Helppo', 
+              textAlign: TextAlign.start,
               style: TextStyle(fontSize: 40.0, color: Colors.white)
             ),
             GestureDetector(

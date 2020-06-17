@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/HomePage.dart';
@@ -5,6 +6,7 @@ import 'pages/HomePage.dart';
 void main()
 {
   WidgetsFlutterBinding.ensureInitialized();
+  Firestore.instance.settings(timestampsInSnapshotsEnabled: true);
 
   runApp(MyApp());
 }
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       (
         scaffoldBackgroundColor: Colors.white,
         dialogBackgroundColor: Colors.white,
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.blueAccent[600],
         cardColor: Colors.white70,
         accentColor: Colors.white,
       ),

@@ -67,7 +67,6 @@ class Post extends StatefulWidget {
 class _PostState extends State<Post> {
   final String postId;
   final String ownerId;
-  //final String timestamp;
   Map likes;
   final String username;
   final String description;
@@ -81,7 +80,6 @@ class _PostState extends State<Post> {
   _PostState(
       {this.postId,
       this.ownerId,
-      //this.timestamp,
       this.likes,
       this.username,
       this.description,
@@ -118,14 +116,14 @@ class _PostState extends State<Post> {
         return ListTile(
           leading: CircleAvatar(
             backgroundImage: CachedNetworkImageProvider(user.url),
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.black,
           ),
           title: GestureDetector(
             onTap: () => displayUserProfile(context, userProfileId: user.id),
             child: Text(
               user.username,
               style:
-                  TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
           ),
           subtitle: Text(
@@ -152,13 +150,13 @@ class _PostState extends State<Post> {
         builder: (context) {
           return SimpleDialog(
             title: Text(
-              "Are you sure? You want to delete Post",
-              style: TextStyle(color: Colors.blueGrey),
+              "Esti sigut ca vrei sa stergi aceasta postare?",
+              style: TextStyle(color: Colors.black),
             ),
             children: <Widget>[
               SimpleDialogOption(
                 child: Text(
-                  "Delete",
+                  "Stergere",
                   style: TextStyle(
                       color: Colors.red, fontWeight: FontWeight.bold),
                 ),
@@ -169,9 +167,9 @@ class _PostState extends State<Post> {
               ),
               SimpleDialogOption(
                 child: Text(
-                  "Cancel",
+                  "Renunta",
                   style: TextStyle(
-                      color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                      color: Colors.black, fontWeight: FontWeight.bold),
                 ),
                 onPressed: () => Navigator.pop(context),
               )
@@ -250,7 +248,6 @@ class _PostState extends State<Post> {
         "username": currentUser.username,
         "userId": currentUser.id,
         "timestamp": DateTime.now(),
-        // "timestamp": timestamp,
         "url": url,
         "postId": postId,
         "userProfileImg": currentUser.url,
@@ -300,13 +297,6 @@ class _PostState extends State<Post> {
         alignment: Alignment.center,
         children: <Widget>[
           Image.network(url),
-          // showHeart
-          //     ? Icon(
-          //         Icons.favorite,
-          //         size: 140.0,
-          //         color: Colors.red,
-          //       )
-          //     : Text(""),
         ],
       ),
     );
@@ -326,7 +316,7 @@ class _PostState extends State<Post> {
               child: Icon(
                 isLiked ? Icons.favorite : Icons.favorite_border,
                 size: 20.0,
-                color: Colors.redAccent,
+                color: Colors.blueGrey,
               ),
             ),
             Padding(
@@ -350,7 +340,7 @@ class _PostState extends State<Post> {
               child: Text(
                 "$likeCount likes",
                 style:
-                    TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             )
           ],
@@ -361,16 +351,16 @@ class _PostState extends State<Post> {
             Container(
               margin: EdgeInsets.only(left: 20.0),
               child: Text(
-                "$username",
+                "$username ",
                 style:
-                    TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                    TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
               ),
             ),
             Expanded(
               child: Text(
                 description,
                 style: TextStyle(
-                  color: Colors.blueGrey,
+                  color: Colors.black,
                 ),
               ),
             )
