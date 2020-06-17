@@ -139,24 +139,7 @@ final String currentOnlineUserId = currentUser.id;
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: RaisedButton(
-                      onPressed: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => UploadPage())),
-                      color: Colors.yellow[200],
-                      child: Container(
-                      height: 55.0, 
-                      width: 360.0, 
-                      child: Center(
-                        child: Text(
-                          'Adauga un anunt',
-                          style: TextStyle(
-                            color: Colors.black, 
-                            fontSize: 16.0, 
-                            fontWeight: FontWeight.bold
-                          )
-                        ),
-                        ),
-                      ),
-                    ),
+                    child: createAddAnnounceButton(),
                   ),
                 ),
               ],
@@ -202,6 +185,45 @@ final String currentOnlineUserId = currentUser.id;
           title: "Urmareste", performFunction: controlFollowUser);
     }
   }
+
+   createAddAnnounceButton() {
+        bool ownProfile = currentOnlineUserId == widget.userProfileId;
+    if (ownProfile) {
+       return createButtonAddAnnounceAndFunction();
+    } else if (following) {
+      return null;
+    } else if (!following) {
+      return null;
+    }
+  }
+
+    createButtonAddAnnounceAndFunction(){
+       return Container(
+        padding: EdgeInsets.only(top: 3.0),
+        child: RaisedButton(
+          color: Colors.yellow[200],
+          onPressed: () => Navigator.push(context, MaterialPageRoute(
+            builder: (context) =>
+                UploadPage(gCurrentUser: currentUser,))),
+          child: Container(
+            width: 360.0,
+            height: 55.0,
+            child: Center(
+              child: Text(
+                'Adauga un anunt',
+                style: TextStyle(
+                    color: following ? Colors.black : Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            alignment: Alignment.centerRight,
+            decoration: BoxDecoration(
+                color: following ? Colors.transparent : Colors.transparent,
+                ),
+          ),
+        ),
+      );
+    }
 
   controlUnfollowUser() {
     setState(() {
@@ -300,6 +322,14 @@ final String currentOnlineUserId = currentUser.id;
             builder: (context) =>
                 EditProfilePage(currentOnlineUserId: currentOnlineUserId)));
   }
+
+  // addAnnounceFromProfile() {
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) =>
+  //               UploadPage(currentOnlineUserId: currentOnlineUserId)));
+  // }
 
 
    @override

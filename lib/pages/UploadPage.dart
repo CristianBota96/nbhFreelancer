@@ -14,8 +14,9 @@ import 'package:image/image.dart' as ImD;
 
 class UploadPage extends StatefulWidget {
   final User gCurrentUser; 
+  final String currentOnlineUserId;
 
-  UploadPage({this.gCurrentUser});
+  UploadPage({this.gCurrentUser, this.currentOnlineUserId});
 
   @override
   _UploadPageState createState() => _UploadPageState();
@@ -168,8 +169,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
   displayUploadFormScreen(){
     return Scaffold(
       appBar: AppBar(
-
-        backgroundColor: Colors.transparent, 
+        backgroundColor: Colors.white, 
         elevation: 0.0,
         leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.black,), onPressed: clearPostInfo),
         title: Text('Anunt nou', style: TextStyle( color: Colors.black),),
