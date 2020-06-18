@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:NBHFreelancer/models/user.dart';
 import 'package:NBHFreelancer/pages/CommentsPage.dart';
@@ -91,15 +92,23 @@ class _PostState extends State<Post> {
   Widget build(BuildContext context) {
     isLiked = (likes[currentOnlineUserId] == true);
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: 12.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          createPostHead(),
-          createPostPictue(),
-          createPostFooter(),
-        ],
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 3.0),
+        child: Card(
+          color: Colors.white,
+          elevation: 0.2,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              // createPostPictue(),
+              createPostAnnounce(),
+              // createPostHead(),
+              createPostFooter(),    
+              Divider(color: Colors.transparent,), 
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -122,6 +131,52 @@ class _PostState extends State<Post> {
             onTap: () => displayUserProfile(context, userProfileId: user.id),
             child: Text(
               user.username,
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+          ),
+          subtitle: Text(
+            location,
+            style: TextStyle(color: Colors.blueGrey),
+          ),
+          trailing: isPostOwner
+              ? IconButton(
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Colors.blueGrey,
+                  ),
+                  onPressed: () => controlPostDelete(context),
+                )
+              : Text(""),
+        );
+      },
+    );
+  }
+
+  createPostAnnounce() {
+    return FutureBuilder(
+      future: usersReference.document(ownerId).get(),
+      builder: (context, dataSnapshot) {
+        if (!dataSnapshot.hasData) {
+          return circularProgress();
+        }
+        User user = User.fromDocument(dataSnapshot.data);
+        bool isPostOwner = currentOnlineUserId == ownerId;
+        return ListTile(
+          leading: Container(
+              child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Image.network(url),
+              ],
+            ),
+            // backgroundImage: CachedNetworkImageProvider(user.url),
+            // backgroundColor: Colors.black,
+          ),
+          title: GestureDetector(
+            onTap: () => displayUserProfile(context, userProfileId: user.id),
+            child: Text(
+              description,
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
@@ -309,13 +364,13 @@ class _PostState extends State<Post> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 40.0, left: 20.0),
+              padding: EdgeInsets.only(top: 40.0, left: 20.0,),
             ),
             GestureDetector(
               onTap: () => controlUserLikePost(),
               child: Icon(
                 isLiked ? Icons.favorite : Icons.favorite_border,
-                size: 20.0,
+                // size: 20.0,
                 color: Colors.blueGrey,
               ),
             ),
@@ -327,7 +382,7 @@ class _PostState extends State<Post> {
                   postId: postId, ownerId: ownerId, url: url),
               child: Icon(
                 Icons.chat_bubble_outline,
-                size: 28.0,
+                // size: 28.0,
                 color: Colors.blueGrey,
               ),
             )
@@ -356,14 +411,14 @@ class _PostState extends State<Post> {
                     TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
               ),
             ),
-            Expanded(
-              child: Text(
-                description,
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-            )
+            // Expanded(
+            //   child: Text(
+            //     description,
+            //     style: TextStyle(
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            // )
           ],
         )
       ],

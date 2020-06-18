@@ -104,7 +104,7 @@ final String currentOnlineUserId = currentUser.id;
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 13.0),
                   child: Text(
-                    'Salut,' + user.username,
+                    user.username,
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -126,9 +126,75 @@ final String currentOnlineUserId = currentUser.id;
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(top: 3.0, bottom: 13.0),
+                  padding: EdgeInsets.only(top: 3.0, bottom: 3.0),
                   child: Text(
                     user.bio,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(top: 3.0),
+                  child: Text(
+                    'Email',
+                    style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(top: 3.0, bottom: 13.0),
+                  child: Text(
+                    user.email,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(top: 3.0),
+                  child: Text(
+                    'Numar de telefon',
+                    style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(top: 3.0, bottom: 13.0),
+                  child: Text(
+                    user.phoneNumber,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(top: 3.0),
+                  child: Text(
+                    'Adresa',
+                    style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(top: 3.0, bottom: 13.0),
+                  child: Text(
+                    user.location,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 14.0,
@@ -376,7 +442,7 @@ final String currentOnlineUserId = currentUser.id;
             Padding(
               padding: EdgeInsets.only(top: 20.0),
               child: Text(
-                "No Post",
+                "Nu exista niciun anunt",
                 style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 40.0,
@@ -399,7 +465,7 @@ final String currentOnlineUserId = currentUser.id;
         mainAxisSpacing: 1.5,
         crossAxisSpacing: 1.5,
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         children: gridTilesList,
       );
     } else if (postOrientation == "list") {
