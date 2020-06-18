@@ -111,7 +111,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
     List<Placemark> placeMarks = await Geolocator().placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark mPlacemark = placeMarks[0]; 
     String completeAdressInfo = '${mPlacemark.subThoroughfare} ${mPlacemark.thoroughfare}, ${mPlacemark.subLocality} ${mPlacemark.locality}, ${mPlacemark.subAdministrativeArea} ${mPlacemark.administrativeArea}, ${mPlacemark.postalCode} ${mPlacemark.country},';
-    String specificAdress = '${mPlacemark.locality}, ${mPlacemark.country}';
+    String specificAdress = '${mPlacemark.locality}, ${mPlacemark.country}, ${mPlacemark.subThoroughfare}, ${mPlacemark.thoroughfare}, ${mPlacemark.postalCode}';
     locationTextEditingController.text = specificAdress;
   }
 
