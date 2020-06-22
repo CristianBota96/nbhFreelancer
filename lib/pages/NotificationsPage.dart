@@ -160,18 +160,12 @@ class NotificationsItem extends StatelessWidget {
   displayOwnProfile(BuildContext context, {String userProfileId}) {
     Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => ProfilePage(
-                  userProfileId: currentUser.id,
-                )));
+        MaterialPageRoute(builder: (context) => ProfilePage(userProfileId: currentUser.id,)));
   }
 
   displayUserProfile(BuildContext context, {String userProfileId}) {
     Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => ProfilePage(
-                  userProfileId: userProfileId,
-                )));
+        MaterialPageRoute(builder: (context) => ProfilePage(userProfileId: userProfileId,)));
   }
 }

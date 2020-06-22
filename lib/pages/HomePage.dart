@@ -122,7 +122,9 @@ class _HomePageState extends State<HomePage> {
         'url': gCurrentUser.photoUrl,
         'email': gCurrentUser.email, 
         'bio': '',
-        'timestamp': timestamp
+        'timestamp': timestamp,
+        'phoneNumber': '', 
+        'location': '',
       });
       documentSnapshot = await usersReference.document(gCurrentUser.id).get();
     }    
