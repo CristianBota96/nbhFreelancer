@@ -1,4 +1,5 @@
 import 'package:NBHFreelancer/models/user.dart';
+import 'package:NBHFreelancer/pages/GoogleMapsPage.dart';
 import 'package:NBHFreelancer/widgets/HeaderWidget.dart';
 import 'package:NBHFreelancer/widgets/PostWidget.dart';
 import 'package:NBHFreelancer/widgets/ProgressWidget.dart';
@@ -74,6 +75,14 @@ class _TimeLinePageState extends State<TimeLinePage> {
         body: RefreshIndicator(
           child: createUserTimeline(),
           onRefresh: () => retrieveTimeLine(),
-        ));
+        ), 
+          floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => GoogleMapsPage(gCurrentUser: currentUser,)));
+          },
+          child: Icon(Icons.pin_drop, color: Colors.white,),
+          backgroundColor: Colors.teal,
+        ),
+        );
   }
 }

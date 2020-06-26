@@ -110,8 +110,8 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high); 
     List<Placemark> placeMarks = await Geolocator().placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark mPlacemark = placeMarks[0]; 
-    String completeAdressInfo = '${mPlacemark.subThoroughfare} ${mPlacemark.thoroughfare}, ${mPlacemark.subLocality} ${mPlacemark.locality}, ${mPlacemark.subAdministrativeArea} ${mPlacemark.administrativeArea}, ${mPlacemark.postalCode} ${mPlacemark.country},';
-    String specificAdress = '${mPlacemark.locality}, ${mPlacemark.country}, ${mPlacemark.subThoroughfare}, ${mPlacemark.thoroughfare}, ${mPlacemark.postalCode}';
+    String completeAdressInfo = '${mPlacemark.subThoroughfare} ${mPlacemark.thoroughfare}, ${mPlacemark.subLocality} ${mPlacemark.locality}, ${mPlacemark.subAdministrativeArea} ${mPlacemark.administrativeArea}, ${mPlacemark.postalCode} ${mPlacemark.country},  ${mPlacemark.position}';
+    String specificAdress = '${mPlacemark.locality}, ${mPlacemark.country}, ${mPlacemark.subThoroughfare}, ${mPlacemark.thoroughfare}, ${mPlacemark.postalCode}, ${mPlacemark.position}';
     locationTextEditingController.text = specificAdress;
   }
 
