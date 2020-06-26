@@ -1,11 +1,11 @@
 
-import 'package:NBHFreelancer/models/user.dart';
-import 'package:NBHFreelancer/pages/HomePage.dart';
-import 'package:NBHFreelancer/pages/UploadPage.dart';
-import 'package:NBHFreelancer/widgets/HeaderWidget.dart';
-import 'package:NBHFreelancer/widgets/PostTileWidget.dart';
-import 'package:NBHFreelancer/widgets/PostWidget.dart';
-import 'package:NBHFreelancer/widgets/ProgressWidget.dart';
+import 'package:Helppo/models/user.dart';
+import 'package:Helppo/pages/HomePage.dart';
+import 'package:Helppo/pages/UploadPage.dart';
+import 'package:Helppo/widgets/HeaderWidget.dart';
+import 'package:Helppo/widgets/PostTileWidget.dart';
+import 'package:Helppo/widgets/PostWidget.dart';
+import 'package:Helppo/widgets/ProgressWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -402,6 +402,7 @@ final String currentOnlineUserId = currentUser.id;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar( 
+         iconTheme: IconThemeData(color: Colors.black),
          title: Text('Profil', style: TextStyle( color: Colors.black),),
          backgroundColor: Colors.transparent,
          elevation: 0.0,

@@ -1,9 +1,10 @@
-import 'package:NBHFreelancer/models/user.dart';
-import 'package:NBHFreelancer/widgets/HeaderWidget.dart';
-import 'package:NBHFreelancer/widgets/PostWidget.dart';
-import 'package:NBHFreelancer/widgets/ProgressWidget.dart';
+import 'package:Helppo/models/user.dart';
+import 'package:Helppo/pages/GoogleMapsPage.dart';
+import 'package:Helppo/widgets/HeaderWidget.dart';
+import 'package:Helppo/widgets/PostWidget.dart';
+import 'package:Helppo/widgets/ProgressWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:NBHFreelancer/pages/HomePage.dart';
+import 'package:Helppo/pages/HomePage.dart';
 import 'package:flutter/material.dart';
 
 class TimeLinePage extends StatefulWidget {
@@ -74,6 +75,14 @@ class _TimeLinePageState extends State<TimeLinePage> {
         body: RefreshIndicator(
           child: createUserTimeline(),
           onRefresh: () => retrieveTimeLine(),
-        ));
+        ), 
+          floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => GoogleMapsPage(gCurrentUser: currentUser,)));
+          },
+          child: Icon(Icons.pin_drop, color: Colors.white,),
+          backgroundColor: Colors.teal,
+        ),
+        );
   }
 }

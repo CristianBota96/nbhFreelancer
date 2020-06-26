@@ -1,5 +1,5 @@
-import 'package:NBHFreelancer/pages/PostScreenPage.dart';
-import 'package:NBHFreelancer/widgets/PostWidget.dart';
+import 'package:Helppo/pages/PostScreenPage.dart';
+import 'package:Helppo/widgets/PostWidget.dart';
 import 'package:flutter/material.dart';
 
 class PostTile extends StatelessWidget {

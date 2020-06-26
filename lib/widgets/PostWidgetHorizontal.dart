@@ -10,7 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Post extends StatefulWidget {
+class PostHorizontal extends StatefulWidget {
   final String postId;
   final String ownerId;
   //final String timestamp;
@@ -20,7 +20,7 @@ class Post extends StatefulWidget {
   final String location;
   final String url;
 
-  Post(
+  PostHorizontal(
       {this.postId,
       this.ownerId,
       //this.timestamp,
@@ -30,8 +30,8 @@ class Post extends StatefulWidget {
       this.location,
       this.url});
 
-  factory Post.fromDocument(DocumentSnapshot documentSnapshot) {
-    return Post(
+  factory PostHorizontal.fromDocument(DocumentSnapshot documentSnapshot) {
+    return PostHorizontal(
         postId: documentSnapshot["postId"],
         ownerId: documentSnapshot["ownerId"],
         //timestamp: documentSnapshot["timestamp"],
@@ -52,7 +52,7 @@ class Post extends StatefulWidget {
   }
 
   @override
-  _PostState createState() => _PostState(
+  __PostHorizontalState createState() => __PostHorizontalState(
         postId: this.postId,
         ownerId: this.ownerId,
         //this.timestamp,
@@ -65,7 +65,7 @@ class Post extends StatefulWidget {
       );
 }
 
-class _PostState extends State<Post> {
+class __PostHorizontalState extends State<PostHorizontal> {
   final String postId;
   final String ownerId;
   Map likes;
@@ -78,7 +78,7 @@ class _PostState extends State<Post> {
   bool showHeart = false;
   final String currentOnlineUserId = currentUser.id;
 
-  _PostState(
+  __PostHorizontalState(
       {this.postId,
       this.ownerId,
       this.likes,
@@ -94,19 +94,44 @@ class _PostState extends State<Post> {
 
     return Container(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 3.0),
-        child: Card(
-          color: Colors.white,
-          elevation: 0.2,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              // createPostPictue(),
-              createPostAnnounce(),
-              // createPostHead(),
-              createPostFooter(),    
-              Divider(color: Colors.transparent,), 
-            ],
+       padding: EdgeInsets.only(left: 16.0, top: 3.0),
+        child: new FittedBox(
+          child: Material(
+              color: Colors.white,
+              elevation: 14.0,
+              borderRadius: BorderRadius.circular(24.0),
+              shadowColor: Color(0x802196F3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    width: 180,
+                    height: 200,
+                    child: ClipRRect(
+                      borderRadius: new BorderRadius.circular(24.0),
+                      child:createPostPictue(),
+                      
+                    ),),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: 200,
+                        // height: 200,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:createPostAnnounce(), 
+                        ),
+                    ),
+                    Container(
+                      // child: Padding(
+                        // padding: const EdgeInsets.all(8.0),
+                        child:createPostFooter(), 
+                      // ),
+                    ),
+                    ],
+                  ),
+                ],)
           ),
         ),
       ),
@@ -154,48 +179,41 @@ class _PostState extends State<Post> {
   }
 
   createPostAnnounce() {
-    return FutureBuilder(
-      future: usersReference.document(ownerId).get(),
-      builder: (context, dataSnapshot) {
-        if (!dataSnapshot.hasData) {
-          return circularProgress();
-        }
-        User user = User.fromDocument(dataSnapshot.data);
-        bool isPostOwner = currentOnlineUserId == ownerId;
-        return ListTile(
-          leading: Container(
-              child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Image.network(url),
-              ],
+    return Container(
+      //  padding: EdgeInsets.only(top: 10.0, left: 6.0,),
+      child: FutureBuilder(
+        future: usersReference.document(ownerId).get(),
+        builder: (context, dataSnapshot) {
+          if (!dataSnapshot.hasData) {
+            return circularProgress();
+          }
+          User user = User.fromDocument(dataSnapshot.data);
+          bool isPostOwner = currentOnlineUserId == ownerId;
+          return ListTile(
+            title: GestureDetector(
+              onTap: () => displayUserProfile(context, userProfileId: user.id),
+              child: Text(
+                description,
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              ),
             ),
-            // backgroundImage: CachedNetworkImageProvider(user.url),
-            // backgroundColor: Colors.black,
-          ),
-          title: GestureDetector(
-            onTap: () => displayUserProfile(context, userProfileId: user.id),
-            child: Text(
-              description,
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            subtitle: Text(
+              location,
+              style: TextStyle(color: Colors.blueGrey),
             ),
-          ),
-          subtitle: Text(
-            location,
-            style: TextStyle(color: Colors.blueGrey),
-          ),
-          trailing: isPostOwner
-              ? IconButton(
-                  icon: Icon(
-                    Icons.more_vert,
-                    color: Colors.blueGrey,
-                  ),
-                  onPressed: () => controlPostDelete(context),
-                )
-              : Text(""),
-        );
-      },
+            trailing: isPostOwner
+                ? IconButton(
+                    icon: Icon(
+                      Icons.more_vert,
+                      color: Colors.blueGrey,
+                    ),
+                    onPressed: () => controlPostDelete(context),
+                  )
+                : Text(""),
+          );
+        },
+      ),
     );
   }
 
@@ -359,12 +377,13 @@ class _PostState extends State<Post> {
 
   createPostFooter() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 40.0, left: 20.0,),
+              padding: EdgeInsets.only(top: 20.0, left: 0.0,),
             ),
             GestureDetector(
               onTap: () => controlUserLikePost(),
@@ -391,7 +410,7 @@ class _PostState extends State<Post> {
         Row(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(left: 20.0),
+              // margin: EdgeInsets.only(left: 20.0),
               child: Text(
                 "$likeCount likes",
                 style:
@@ -404,21 +423,13 @@ class _PostState extends State<Post> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(left: 20.0),
               child: Text(
                 "$username ",
                 style:
                     TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
               ),
             ),
-            // Expanded(
-            //   child: Text(
-            //     description,
-            //     style: TextStyle(
-            //       color: Colors.black,
-            //     ),
-            //   ),
-            // )
+ 
           ],
         )
       ],

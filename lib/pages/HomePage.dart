@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:NBHFreelancer/models/user.dart';
-import 'package:NBHFreelancer/pages/CreateAccountPage.dart';
-import 'package:NBHFreelancer/pages/NotificationsPage.dart';
-import 'package:NBHFreelancer/pages/ProfilePage.dart';
-import 'package:NBHFreelancer/pages/SearchPage.dart';
-import 'package:NBHFreelancer/pages/TimeLinePage.dart';
-import 'package:NBHFreelancer/pages/UploadPage.dart';
+import 'package:Helppo/models/user.dart';
+import 'package:Helppo/pages/CreateAccountPage.dart';
+import 'package:Helppo/pages/NotificationsPage.dart';
+import 'package:Helppo/pages/ProfilePage.dart';
+import 'package:Helppo/pages/SearchPage.dart';
+import 'package:Helppo/pages/TimeLinePage.dart';
+import 'package:Helppo/pages/UploadPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
