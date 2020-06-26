@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:NBHFreelancer/models/user.dart';
-import 'package:NBHFreelancer/pages/HomePage.dart';
-import 'package:NBHFreelancer/widgets/ProgressWidget.dart';
+import 'package:Helppo/models/user.dart';
+import 'package:Helppo/pages/HomePage.dart';
+import 'package:Helppo/widgets/ProgressWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -78,22 +78,31 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
   }
 
   displayUploadScreen(){
-    return Container(
-      color: Theme.of(context).accentColor.withOpacity(0.5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, 
-        children: <Widget>[
-          Icon(Icons.add_photo_alternate, color: Colors.blueGrey, size: 200.0,), 
-          Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0),),
-              child: Text('Adauga un anunt', style: TextStyle(color: Colors.white, fontSize: 20.0),),
-              color: Colors.teal,
-              onPressed: () => takeImage(context),
-            ), 
-          ),
-        ],
+    return Scaffold(
+        appBar: AppBar( 
+         iconTheme: IconThemeData(color: Colors.black),
+         title: Text('Adaugare anunt', style: TextStyle( color: Colors.black),),
+         backgroundColor: Colors.transparent,
+         elevation: 0.0,
+        ),
+        body: Container(
+        alignment: Alignment.center,
+        color: Theme.of(context).accentColor.withOpacity(0.5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, 
+          children: <Widget>[
+            Icon(Icons.add_photo_alternate, color: Colors.blueGrey, size: 200.0,), 
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0),),
+                child: Text('Adauga un anunt', style: TextStyle(color: Colors.white, fontSize: 20.0),),
+                color: Colors.teal,
+                onPressed: () => takeImage(context),
+              ), 
+            ),
+          ],
+        ),
       ),
     );
   }

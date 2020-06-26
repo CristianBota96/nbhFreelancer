@@ -1,11 +1,9 @@
-import 'dart:typed_data';
-
-import 'package:NBHFreelancer/models/user.dart';
-import 'package:NBHFreelancer/widgets/PostWidgetHorizontal.dart';
-import 'package:NBHFreelancer/widgets/ProgressWidget.dart';
-import 'package:NBHFreelancer/widgets/CustomRippleIndicator.dart';
+import 'package:Helppo/models/user.dart';
+import 'package:Helppo/widgets/PostWidgetHorizontal.dart';
+import 'package:Helppo/widgets/ProgressWidget.dart';
+import 'package:Helppo/widgets/CustomRippleIndicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:NBHFreelancer/pages/HomePage.dart';
+import 'package:Helppo/pages/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:async';

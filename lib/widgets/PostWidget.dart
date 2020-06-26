@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:NBHFreelancer/models/user.dart';
-import 'package:NBHFreelancer/pages/CommentsPage.dart';
-import 'package:NBHFreelancer/pages/HomePage.dart';
-import 'package:NBHFreelancer/pages/ProfilePage.dart';
-import 'package:NBHFreelancer/widgets/ProgressWidget.dart';
+import 'package:Helppo/models/user.dart';
+import 'package:Helppo/pages/CommentsPage.dart';
+import 'package:Helppo/pages/HomePage.dart';
+import 'package:Helppo/pages/ProfilePage.dart';
+import 'package:Helppo/widgets/ProgressWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
