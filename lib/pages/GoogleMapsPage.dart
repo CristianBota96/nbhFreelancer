@@ -115,7 +115,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
-        title: Text('Helppo', style: TextStyle(color: Colors.black),),
+        title: Text('Harta', style: TextStyle(color: Colors.black),),
         elevation: 0.0,
       ),
       body: Stack(
